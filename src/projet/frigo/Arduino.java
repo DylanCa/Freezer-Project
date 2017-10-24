@@ -1,18 +1,23 @@
 package projet.frigo;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
+
 import java.util.Enumeration;
+import java.util.TooManyListenersException;
 
 public class Arduino implements SerialPortEventListener, ICAD {
 	SerialPort serialPort;
-	private static final String PORT_NAMES[] = { "COM3", // Widows
-	};
+	private static final String PORT_NAMES[] = { "COM1", "COM2", "COM3", "COM4", "COM5", };
 
 	/**
 	 * A BufferedReader which will be fed by a InputStreamReader converting the
@@ -28,18 +33,16 @@ public class Arduino implements SerialPortEventListener, ICAD {
 
 	private Model model;
 
-	public Arduino() {
-		this.model = new Model();
+	public Arduino(Model model) throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException,
+			IOException, TooManyListenersException {
+		this.model = model;
 	}
 
-	public void initialize() {
-		// the next line is for Raspberry Pi and
-		// gets us into the while loop and was suggested here was suggested
-		// http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
-		// System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+	public void initialize() throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException,
+			IOException, TooManyListenersException {
 
 		CommPortIdentifier portId = null;
-		Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
+		Enumeration<?> portEnum = CommPortIdentifier.getPortIdentifiers();
 
 		// First, Find an instance of serial port as set in PORT_NAMES.
 		while (portEnum.hasMoreElements()) {
@@ -51,29 +54,21 @@ public class Arduino implements SerialPortEventListener, ICAD {
 				}
 			}
 		}
-		if (portId == null) {
-			System.out.println("Could not find COM port.");
-			return;
-		}
 
-		try {
-			// open serial port, and use class name for the appName.
-			serialPort = (SerialPort) portId.open(this.getClass().getName(), TIME_OUT);
+		// open serial port, and use class name for the appName.
+		serialPort = (SerialPort) portId.open(this.getClass().getName(), TIME_OUT);
 
-			// set port parameters
-			serialPort.setSerialPortParams(DATA_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
-					SerialPort.PARITY_NONE);
+		// set port parameters
+		serialPort.setSerialPortParams(DATA_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-			// open the streams
-			input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
-			output = serialPort.getOutputStream();
+		// open the streams
+		input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
+		output = serialPort.getOutputStream();
 
-			// add event listeners
-			serialPort.addEventListener(this);
-			serialPort.notifyOnDataAvailable(true);
-		} catch (Exception e) {
-			System.err.println(e.toString());
-		}
+		// add event listeners
+		serialPort.addEventListener(this);
+		serialPort.notifyOnDataAvailable(true);
+
 	}
 
 	/**
@@ -93,6 +88,7 @@ public class Arduino implements SerialPortEventListener, ICAD {
 	public synchronized void serialEvent(SerialPortEvent oEvent) {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
+
 				// Boucle qui récupère les données depuis l'arduino
 				String inputLine = input.readLine();
 				String string = inputLine;
@@ -104,6 +100,12 @@ public class Arduino implements SerialPortEventListener, ICAD {
 
 				model.setTempActuelle(temp1);
 				model.setHumidActuelle(humi1);
+
+				if (model.getTempActuelle() > model.getTempVoulueActuelle()) {
+					output.write(255);
+				} else if (model.getTempActuelle() < model.getTempVoulueActuelle()) {
+					output.write(0);
+				}
 
 				// On envoie les données au Model à chaque passage de la boucle
 

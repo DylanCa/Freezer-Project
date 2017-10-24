@@ -27,16 +27,13 @@ public class View extends JFrame {
 	public final JButton btnAfficherGraph;
 	public JLabel lblPointDeRose;
 	public JLabel fieldTempRosee;
-	
-	private Controller controller;
 
 	/**
 	 * Create the frame.
 	 */
-	public View(Controller controller) {
+	public View() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.controller = controller;
 		setTitle("Mini-Frigo connecté");
 		setBounds(100, 100, 424, 381);
 		contentPane = new JPanel();

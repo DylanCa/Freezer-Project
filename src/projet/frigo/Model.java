@@ -7,12 +7,11 @@ public class Model {
 
 	private double tempActuelle = 0;
 	private double humidActuelle = 0;
-	private double tempVoulue = 0;
+	private double tempVoulue = 17;
 	private List<IModelObserver> listModel = new ArrayList<IModelObserver>();
-	private Controller controller;
+	Controller controller;
 
 	public Model() {
-		this.controller = new Controller(this);
 		
 	}
 
@@ -40,7 +39,6 @@ public class Model {
 
 	public void setTempVoulueActuelle(double tempVoulueActuelle) {
 		this.tempVoulue = tempVoulueActuelle;
-		notifyTempVoulueChange();
 	}
 
 	public void addObserver(IModelObserver observer) {
@@ -63,10 +61,6 @@ public class Model {
 		}
 	}
 
-	private void notifyTempVoulueChange() {
-		for (IModelObserver observer : listModel) {
-			observer.tempVoulueNotify(this.tempVoulue);
-		}
-	}
+
 
 }

@@ -12,6 +12,7 @@ public class Controller implements IModelObserver {
 	private double b = 237.7;
 	private double tempRosee;
 	private double finalRosee;
+
 	private Model model;
 	private GraphTemp chart;
 	private View view;
@@ -20,7 +21,9 @@ public class Controller implements IModelObserver {
 	public Controller(Model model) {
 
 		this.model = model;
-		this.view = new View(this);
+		model.controller = this;
+
+		this.view = new View();
 
 		chart = new GraphTemp("Graphique");
 
@@ -35,16 +38,25 @@ public class Controller implements IModelObserver {
 
 		view.buttonConsignePlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				int value = Integer.parseInt(view.labelConsigne.getText()) + 1;
+				int value = (int) (model.getTempVoulueActuelle() + 1);
+				model.setTempVoulueActuelle(value);
+				
 				view.labelConsigne.setText(String.valueOf(value));
+
+				chart.updateConsigne((float) value);
 			}
 		});
 
 		view.buttonConsigneMinus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				int value = Integer.parseInt(view.labelConsigne.getText()) - 1;
+				int value = (int) (model.getTempVoulueActuelle() - 1);
+				model.setTempVoulueActuelle(value);
+
 				view.labelConsigne.setText(String.valueOf(value));
+
+				chart.updateConsigne((float) value);
 			}
+
 		});
 
 		view.btnAfficherGraph.addActionListener(new ActionListener() {
@@ -78,19 +90,15 @@ public class Controller implements IModelObserver {
 
 	}
 
-	@Override
-	public void tempVoulueNotify(double value) {
-		// TODO Dev fonction qui baisse la température sur le frigo ( action sur plaque Peltier )
-
-	}
 
 	private void calculRosee(String serie, double value) {
 
 		tempRosee = (a * tempActuelle) / (b + tempActuelle) + Math.log(humiActuelle * 0.01);
-		finalRosee = (b * tempRosee)  /  (a - tempRosee);
+		finalRosee = (b * tempRosee) / (a - tempRosee);
 
 		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "°C");
 
 	}
+
 
 }

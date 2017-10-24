@@ -19,7 +19,7 @@ public class GraphTemp extends ApplicationFrame {
 	private static final long serialVersionUID = 1L;
 	private static final String TITLE = "Température & Humidité ( Temps réel )";
 	private DynamicTimeSeriesCollection dataset;
-	private float[] newData = new float[2];
+	private float[] newData = new float[3];
 
 	/**
 	 * Constructor
@@ -28,10 +28,11 @@ public class GraphTemp extends ApplicationFrame {
 	 */
 	public GraphTemp(final String title) {
 		super(title);
-		dataset = new DynamicTimeSeriesCollection(2, 60, new Second());
+		dataset = new DynamicTimeSeriesCollection(3, 600, new Second());
 		dataset.setTimeBase(new Second());
 		dataset.addSeries(new float[1], 0, "Température");
 		dataset.addSeries(new float[1], 1, "Humidité");
+		dataset.addSeries(new float[1], 2, "Consigne");
 		JFreeChart chart = createChart(dataset);
 
 		this.add(new ChartPanel(chart), BorderLayout.CENTER);
@@ -59,13 +60,14 @@ public class GraphTemp extends ApplicationFrame {
 	 */
 
 	public void update(String serie, float value) {
+		
+		dataset.advanceTime();
 
 		switch (serie) {
 		case "temp":
 
 			newData[0] = value;
 
-			dataset.advanceTime();
 			dataset.appendData(newData);
 			break;
 
@@ -73,14 +75,17 @@ public class GraphTemp extends ApplicationFrame {
 
 			newData[1] = value;
 
-			dataset.advanceTime();
 			dataset.appendData(newData);
 			break;
-			
+
 		default:
 			break;
 		}
 
+	}
+
+	public void updateConsigne(float value) {
+		newData[2] = value;	
 	}
 
 }

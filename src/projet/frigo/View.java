@@ -12,20 +12,58 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 
+/**
+ * The screen of our application
+ */
 public class View extends JFrame {
-
 	/**
-	 * 
+	 * Must be unique
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The panel containing the content
+	 */
 	private JPanel contentPane;
+	
+	/**
+	 * The label with the temperature
+	 */
 	public final JLabel fieldTemperature;
+	
+	/**
+	 * The label with the humidity
+	 */
 	public final JLabel fieldHumidity;
+	
+	/**
+	 * The label with the consigne
+	 */
 	public final JLabel labelConsigne;
+	
+	/**
+	 * The button that increase the consigne
+	 */
 	public final JButton buttonConsignePlus;
+	
+	/**
+	 * The button that decrease the consigne
+	 */
 	public final JButton buttonConsigneMinus;
+	
+	/**
+	 * The button to show the graph
+	 */
 	public final JButton btnAfficherGraph;
+	
+	/**
+	 * The label with the Point de Rosée
+	 */
 	public JLabel lblPointDeRose;
+	
+	/**
+	 * The label with the temperature de Rosée
+	 */
 	public JLabel fieldTempRosee;
 
 	/**

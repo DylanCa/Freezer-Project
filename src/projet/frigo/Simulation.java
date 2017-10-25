@@ -1,16 +1,41 @@
 package projet.frigo;
 
+/**
+ * A simulator of an Arduino.
+ * <p>
+ * To use if the Arduino is not connected to the computer
+ */
 public class Simulation implements ICAD {
 
+	/**
+	 * The Model to update
+	 */
 	Model model;
+	
+	/**
+	 * A log of the previous temperature
+	 */
 	double oldTemperature = 20;
+	
+	/**
+	 * A log of the previous humidity
+	 */
 	double oldHumidite = 50;
 
+	/**
+	 * Start a simulation
+	 * @param model The model to send the data to
+	 */
 	public Simulation(Model model) {
 		this.model = model;
 		this.initialize();
 	}
 
+	/**
+	 * Initialize the simulation.
+	 * <p>
+	 * /!\ Warning /!\ : Blocking function
+	 */
 	public void initialize() {
 
 		while (true) {

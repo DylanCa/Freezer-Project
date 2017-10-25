@@ -14,17 +14,29 @@ import org.jfree.ui.ApplicationFrame;
 public class GraphTemp extends ApplicationFrame {
 
 	/**
-	 * 
+	 * Required to be unique
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The title for the graph
+	 */
 	private static final String TITLE = "Température & Humidité ( Temps réel )";
+	
+	/**
+	 * Our dataset
+	 */
 	private DynamicTimeSeriesCollection dataset;
+	
+	/**
+	 * The data to add
+	 */
 	private float[] newData = new float[3];
 
 	/**
-	 * Constructor
+	 * Create a graph with a title
 	 * 
-	 * @param title
+	 * @param title The title of our graph
 	 */
 	public GraphTemp(final String title) {
 		super(title);
@@ -41,6 +53,11 @@ public class GraphTemp extends ApplicationFrame {
 
 	}
 
+	/**
+	 * Create a chart from our graph
+	 * @param dataset The data to create it from
+	 * @return JFreeChart graphic
+	 */
 	private JFreeChart createChart(final XYDataset dataset) {
 		final JFreeChart result = ChartFactory.createTimeSeriesChart(TITLE, "Temps", "Valeurs", dataset, true, true,
 				false);
@@ -55,8 +72,8 @@ public class GraphTemp extends ApplicationFrame {
 	/**
 	 * Update data
 	 * 
-	 * @param serie
-	 * @param value
+	 * @param serie The serie
+	 * @param value The Value
 	 */
 
 	public void update(String serie, float value) {
@@ -84,6 +101,10 @@ public class GraphTemp extends ApplicationFrame {
 
 	}
 
+	/**
+	 * Update consigne
+	 * @param value new value
+	 */
 	public void updateConsigne(float value) {
 		newData[2] = value;	
 	}

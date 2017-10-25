@@ -19,6 +19,7 @@ You need the following:
 * a DHT-11 or DHT-22  humidity + temperature  sensor
 
 You can then follow the following schematic:
+
 ![Schema](https://github.com/Yvar-deGoffau/Java_Fridge-Project/raw/master/docs/Projet-PMF_montage.png
 
 You might need something to enclose your thermoelectric plate and your DHT in.

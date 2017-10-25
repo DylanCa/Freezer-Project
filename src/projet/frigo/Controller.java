@@ -23,22 +23,22 @@ public class Controller implements IModelObserver {
 	private double humiActuelle;
 	
 	/**
-	 * Parameter for the Point de Rosée
+	 * Parameter for the Point de Rosï¿½e
 	 */
 	private double a = 17.27;
 	
 	/**
-	 * Parameter for the Point de Rosée
+	 * Parameter for the Point de Rosï¿½e
 	 */
 	private double b = 237.7;
 	
 	/**
-	 * Temperature for the Point de Rosée
+	 * Temperature for the Point de Rosï¿½e
 	 */
 	private double tempRosee;
 	
 	/**
-	 * Final result for the Point de Rosée
+	 * Final result for the Point de Rosï¿½e
 	 */
 	private double finalRosee;
 	private float[] newData = new float[3];
@@ -65,14 +65,27 @@ public class Controller implements IModelObserver {
 	 */
 	public Controller(Model model) {
 
+		// save the model
 		this.model = model;
+		
+		// register to the model
 		model.controller = this;
 
+		// instanciate a new view for our output
 		this.view = new View();
 
+<<<<<<< HEAD
+=======
+		// instanciate a new grafic, to follow the temperature
+		chart = new GraphTemp("Graphique");
+
+		// makes the view render
+>>>>>>> JavaDoc
 		view.setVisible(true);
 
 		this.initializeButtons();
+		
+		// register to the model for changes
 		model.addObserver(this);
 
 	}
@@ -119,7 +132,7 @@ public class Controller implements IModelObserver {
 		update("temp", (float) value);
 		this.calculRosee("temp", value);
 
-		view.fieldTemperature.setText(String.valueOf(value) + "°C");
+		view.fieldTemperature.setText(String.valueOf(value) + "ï¿½C");
 
 	}
 
@@ -140,7 +153,7 @@ public class Controller implements IModelObserver {
 	}
 
 	/**
-	 * Calculate the Point de Roséee
+	 * Calculate the Point de Rosï¿½ee
 	 * @param serie The serie
 	 * @param value The value
 	 */
@@ -149,7 +162,7 @@ public class Controller implements IModelObserver {
 		tempRosee = (a * tempActuelle) / (b + tempActuelle) + Math.log(humiActuelle * 0.01);
 		finalRosee = (b * tempRosee) / (a - tempRosee);
 
-		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "°C");
+		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "ï¿½C");
 
 	}
 

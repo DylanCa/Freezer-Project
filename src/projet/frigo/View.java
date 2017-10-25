@@ -63,19 +63,19 @@ public class View extends JFrame {
 	public final JButton buttonConsigneMinus;
 	
 	/**
-	 * The label with the Point de Rosée
+	 * The label with the Point de Rosï¿½e
 	 */
 	public JLabel lblPointDeRose;
 	
 	/**
-	 * The label with the temperature de Rosée
+	 * The label with the temperature de Rosï¿½e
 	 */
 	public JLabel fieldTempRosee;
 	
 	/**
 	 * The title of the graph
 	 */
-	private static final String TITLE = "Graphiques en temps réel";
+	private static final String TITLE = "Graphiques en temps rï¿½el";
 
 	/**
 	 * The dataset for the graph
@@ -94,13 +94,13 @@ public class View extends JFrame {
 		
 		dataset = new DynamicTimeSeriesCollection(3, 600, new Second());
 		dataset.setTimeBase(new Second());
-		dataset.addSeries(new float[1], 0, "Température");
-		dataset.addSeries(new float[1], 1, "Humidité");
+		dataset.addSeries(new float[1], 0, "Tempï¿½rature");
+		dataset.addSeries(new float[1], 1, "Humiditï¿½");
 		dataset.addSeries(new float[1], 2, "Consigne");
 		
 		
 
-		setTitle("Mini-Frigo connecté");
+		setTitle("Mini-Frigo connectï¿½");
 		setBounds(100, 100, 724, 704);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
@@ -149,7 +149,7 @@ public class View extends JFrame {
 		lblPointDeRose.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPointDeRose.setFont(new Font("Tahoma", Font.PLAIN, 21));
 		
-		fieldTempRosee = new JLabel("0°C");
+		fieldTempRosee = new JLabel("0ï¿½C");
 		fieldTempRosee.setHorizontalAlignment(SwingConstants.CENTER);
 		fieldTempRosee.setForeground(Color.PINK);
 		fieldTempRosee.setFont(new Font("Tahoma", Font.PLAIN, 18));

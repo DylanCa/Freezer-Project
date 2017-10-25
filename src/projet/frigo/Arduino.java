@@ -1,6 +1,7 @@
 package projet.frigo;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -127,7 +128,7 @@ public class Arduino implements SerialPortEventListener, ICAD {
      * <p>
      * The Arduino sends the data under the following format:
      * <p>
-     * {@code < Temperature > ; < Humidité > ; < Point de Rosée > \n}
+     * {@code < Temperature > ; < Humiditï¿½ > ; < Point de Rosï¿½e > \n}
      * <p>
      * This function read that from the event, dispatch it, and sends it to the Model.
      * 
@@ -137,14 +138,14 @@ public class Arduino implements SerialPortEventListener, ICAD {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 
-				// Boucle qui récupère les données depuis l'arduino
+				// Boucle qui rï¿½cupï¿½re les donnï¿½es depuis l'arduino
 				String inputLine = input.readLine();
 				String string = inputLine;
 				String[] parts = string.split(";");
-				double temp1 = Double.parseDouble(parts[0]); // 27°C
+				double temp1 = Double.parseDouble(parts[0]); // 27ï¿½C
 				double humi1 = Double.parseDouble(parts[1]); // 53 %
 				System.out.print("Temperature :" + temp1);
-				System.out.println(" / Humidité :" + humi1);
+				System.out.println(" / Humiditï¿½ :" + humi1);
 
 				model.setTempActuelle(temp1);
 				model.setHumidActuelle(humi1);
@@ -155,7 +156,7 @@ public class Arduino implements SerialPortEventListener, ICAD {
 					output.write(0);
 				}
 
-				// On envoie les données au Model à chaque passage de la boucle
+				// On envoie les donnï¿½es au Model ï¿½ chaque passage de la boucle
 
 			} catch (Exception e) {
 				System.err.println(e.toString());

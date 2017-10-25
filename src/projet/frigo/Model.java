@@ -39,7 +39,6 @@ public class Model {
 	 * Initialize the model
 	 */
 	public Model() {
-		
 	}
 
 	/**
@@ -105,7 +104,9 @@ public class Model {
 	 * @param observer The observer to remove
 	 */
 	public void removeObserver(IModelObserver observer) {
-		listModel.remove(observer);
+		if(listModel.contains(observer)) {
+			listModel.remove(observer);
+		}
 	}
 
 	/**

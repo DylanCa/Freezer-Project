@@ -31,5 +31,5 @@ Schema
 
 ## Links
 
-* Link to the [GitHub Project:](https://github.com/DylanCa/Freezer-Project)
-* Code [documentation:](https://dylanca.github.io/Freezer-Project/) (Java) 
+* [Link to the GitHub Project](https://github.com/DylanCa/Freezer-Project)
+* [Code documentation](https://dylanca.github.io/Freezer-Project/) (Java) 

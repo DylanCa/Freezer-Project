@@ -2,7 +2,7 @@
 Java project realized using C++ and Java through a serial connection to built an HMI
 
 Schema
-![External components](https://github.com/DylanCa/Freezer-Project/raw/master/images/Schema.PNG)]
+![schema](https://user-images.githubusercontent.com/19567048/32003368-15d3ab74-b99f-11e7-933a-f41a7921238e.PNG)]
 
 ## Built With
 
@@ -11,8 +11,7 @@ Schema
 
 
 ## Product Breakdown Structure (PBS)
-![External components](https://github.com/DylanCa/Freezer-Project/raw/master/images/PBS.PNG)]
-
+![pbs](https://user-images.githubusercontent.com/19567048/32003285-e2060ada-b99e-11e7-9f9f-4595a1f316c3.png)]
 
 ## Materials
 
@@ -20,7 +19,7 @@ Schema
 * DHT AM2302* Breadboard
 
 ## Poster about Scientific Concepts
-![External components](https://github.com/DylanCa/Freezer-Project/raw/master/images/Poster_scientific_concepts.PNG)]
+![poster_scientific_concepts](https://user-images.githubusercontent.com/19567048/32003321-f4b828fc-b99e-11e7-9a24-0948ef97e621.PNG)]
 
 ## Contributors
 

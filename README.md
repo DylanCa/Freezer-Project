@@ -25,9 +25,10 @@ Schema
 
 * Romain V
 * Dylan C
-* Cédric M
+* CÃ©dric M
 * Dylan P
 * Yvar D
 
 ## Links
-Link to the[GitHub Project:](https://github.com/DylanCa/Freezer-Project)
+Link to the [GitHub Project:](https://github.com/DylanCa/Freezer-Project)
+Code [documentation:](https://dylanca.github.io/Java_Fridge-Project/Javadoc/index.html) (Java) 

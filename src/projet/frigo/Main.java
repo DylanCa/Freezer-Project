@@ -1,6 +1,15 @@
 package projet.frigo;
 
+/**
+ * The main application
+ *
+ */
 public class Main {
+	
+	/**
+	 * Start the application
+	 * @param args The command-line argument; not used
+	 */
 	public static void main(String[] args) {
 
 		ICAD icad;

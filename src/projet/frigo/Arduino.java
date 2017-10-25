@@ -15,29 +15,69 @@ import gnu.io.UnsupportedCommOperationException;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
 
+/**
+ * The class used to connect to the Arduino
+ * <p>
+ * This class is used to connect to the Arduino. 
+ * It implements SerialPortEventListener to register as a dispatcher,
+ *  and then on each serialEvent it dispatch the data and sends it to the Model.
+ *
+ */
 public class Arduino implements SerialPortEventListener, ICAD {
+    /** 
+     * The port we're going to use. 
+     */
 	SerialPort serialPort;
+	
+    /** 
+     * Port names to test for to connect to the Arduino under different OS
+     */
 	private static final String PORT_NAMES[] = { "COM1", "COM2", "COM3", "COM4", "COM5", };
 
-	/**
-	 * A BufferedReader which will be fed by a InputStreamReader converting the
-	 * bytes into characters making the displayed results codepage independent
-	 */
+    /**
+     * A BufferedReader which will be fed by a InputStreamReader
+     * converting the bytes into characters and
+     * making the displayed results codepage independent
+     */
 	private BufferedReader input;
-	/** The output stream to the port */
-	private OutputStream output;
-	/** Milliseconds to block while waiting for port open */
+	
+	/** 
+	 * The output stream to the port
+	 */
+	private OutputStream output;	
+	
+	/**
+	 *  Milliseconds to block while waiting for port open 
+	 */
 	private static final int TIME_OUT = 2000;
-	/** Default bits per second for COM port. */
+	
+	/** Default bits per second for COM port.
+     * Should be the same as under the Arduino 
+     */
 	private static final int DATA_RATE = 9600;
-
+	
+    /**
+     * A reference to the Model to send data to
+     */
 	private Model model;
 
+	/**
+	 * Initialize the Arduino with the given Model
+	 * @param model The Model to connect to
+	 * @throws NoSuchPortException
+	 * @throws PortInUseException
+	 * @throws UnsupportedCommOperationException
+	 * @throws IOException
+	 * @throws TooManyListenersException
+	 */
 	public Arduino(Model model) throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException,
 			IOException, TooManyListenersException {
 		this.model = model;
 	}
 
+    /**
+     * Search for the port, connect to it, and add Event Listeners for the dispatch loop
+     */
 	public void initialize() throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException,
 			IOException, TooManyListenersException {
 
@@ -82,9 +122,17 @@ public class Arduino implements SerialPortEventListener, ICAD {
 		}
 	}
 
-	/**
-	 * Handle an event on the serial port. Read the data and print it.
-	 */
+    /**
+     * Handle an event on the serial port. Read the data and interpret it.
+     * <p>
+     * The Arduino sends the data under the following format:
+     * <p>
+     * {@code < Temperature > ; < Humidité > ; < Point de Rosée > \n}
+     * <p>
+     * This function read that from the event, dispatch it, and sends it to the Model.
+     * 
+     * @param oEvent Event data. See gnu.io.SerialPortEvent
+     */
 	public synchronized void serialEvent(SerialPortEvent oEvent) {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {

@@ -1,6 +1,12 @@
 # Java_Freezer-Project
 Java project realized using C++ and Java through a serial connection to built an HMI
 
+Schema
+![External components](https://github.com/DylanCa/Freezer-Project/tree/master/images/Schema.PNG)]
+
+
+
+
 Final appearance
 
 ![External components](https://github.com/LINK HERE)]
@@ -11,12 +17,17 @@ Final appearance
 * [Arduino](https://www.arduino.cc/en/Main/Software) - Arduino IDE
 
 
+## Product Breakdown Structure (PBS)
+![External components](https://github.com/DylanCa/Freezer-Project/tree/master/images/PBS.PNG)]
 
 
 ## Materials
 
 * Arduino Uno
 * DHT AM2302* Breadboard
+
+## Poster about Scientific Concepts
+![External components](https://github.com/DylanCa/Freezer-Project/tree/master/images/Poster_scientific_concepts.PNG)]
 
 ## Contributors
 

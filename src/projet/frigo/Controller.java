@@ -74,13 +74,7 @@ public class Controller implements IModelObserver {
 		// instanciate a new view for our output
 		this.view = new View();
 
-<<<<<<< HEAD
-=======
-		// instanciate a new grafic, to follow the temperature
-		chart = new GraphTemp("Graphique");
-
 		// makes the view render
->>>>>>> JavaDoc
 		view.setVisible(true);
 
 		this.initializeButtons();
@@ -132,7 +126,7 @@ public class Controller implements IModelObserver {
 		update("temp", (float) value);
 		this.calculRosee("temp", value);
 
-		view.fieldTemperature.setText(String.valueOf(value) + "�C");
+		view.fieldTemperature.setText(String.valueOf(value) + "C");
 
 	}
 
@@ -162,7 +156,7 @@ public class Controller implements IModelObserver {
 		tempRosee = (a * tempActuelle) / (b + tempActuelle) + Math.log(humiActuelle * 0.01);
 		finalRosee = (b * tempRosee) / (a - tempRosee);
 
-		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "�C");
+		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "C");
 
 	}
 

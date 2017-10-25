@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Java_Freezer-Project
 Java project realized using C++ and Java through a serial connection to built an HMI
 
@@ -33,4 +32,4 @@ Schema
 ## Links
 
 * Link to the [GitHub Project:](https://github.com/DylanCa/Freezer-Project)
-* Code [documentation:](https://dylanca.github.io/Java_Fridge-Project/Javadoc/index.html) (Java) 
+* Code [documentation:](https://dylanca.github.io/Freezer-Project/) (Java) 

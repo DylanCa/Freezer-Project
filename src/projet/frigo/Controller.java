@@ -12,9 +12,9 @@ public class Controller implements IModelObserver {
 	private double b = 237.7;
 	private double tempRosee;
 	private double finalRosee;
+	private float[] newData = new float[3];
 
 	private Model model;
-	private GraphTemp chart;
 	private View view;
 	private DecimalFormat df = new DecimalFormat("#.##");
 
@@ -24,8 +24,6 @@ public class Controller implements IModelObserver {
 		model.controller = this;
 
 		this.view = new View();
-
-		chart = new GraphTemp("Graphique");
 
 		view.setVisible(true);
 
@@ -40,10 +38,10 @@ public class Controller implements IModelObserver {
 			public void actionPerformed(ActionEvent ae) {
 				int value = (int) (model.getTempVoulueActuelle() + 1);
 				model.setTempVoulueActuelle(value);
-				
+
 				view.labelConsigne.setText(String.valueOf(value));
 
-				chart.updateConsigne((float) value);
+				updateConsigne((float) value);
 			}
 		});
 
@@ -54,15 +52,9 @@ public class Controller implements IModelObserver {
 
 				view.labelConsigne.setText(String.valueOf(value));
 
-				chart.updateConsigne((float) value);
+				updateConsigne((float) value);
 			}
 
-		});
-
-		view.btnAfficherGraph.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				chart.setVisible(true);
-			}
 		});
 	}
 
@@ -71,7 +63,7 @@ public class Controller implements IModelObserver {
 
 		this.tempActuelle = value;
 
-		chart.update("temp", (float) value);
+		update("temp", (float) value);
 		this.calculRosee("temp", value);
 
 		view.fieldTemperature.setText(String.valueOf(value) + "°C");
@@ -83,13 +75,12 @@ public class Controller implements IModelObserver {
 
 		this.humiActuelle = value;
 
-		chart.update("humi", (float) value);
+		update("humi", (float) value);
 		this.calculRosee("humi", value);
 
 		view.fieldHumidity.setText(String.valueOf(value) + "%");
 
 	}
-
 
 	private void calculRosee(String serie, double value) {
 
@@ -100,5 +91,33 @@ public class Controller implements IModelObserver {
 
 	}
 
+	public void update(String serie, float value) {
+
+		view.getDataset().advanceTime();
+
+		switch (serie) {
+		case "temp":
+
+			newData[0] = value;
+
+			view.getDataset().appendData(newData);
+			break;
+
+		case "humi":
+
+			newData[1] = value;
+
+			view.getDataset().appendData(newData);
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	public void updateConsigne(float value) {
+		newData[2] = value;
+	}
 
 }

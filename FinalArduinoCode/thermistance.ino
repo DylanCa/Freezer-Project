@@ -1,4 +1,4 @@
-int ThermistorPin = 0;
+int ThermistorPin = 4;
 int Vo;
 float R1 = 10000;
 float logR2, R2, T;

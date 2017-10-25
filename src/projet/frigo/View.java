@@ -21,22 +21,65 @@ import org.jfree.data.time.Second;
 import org.jfree.data.xy.XYDataset;
 import javax.swing.SwingConstants;
 
-public class View extends JFrame {
 
+/**
+ * The screen of our application
+ */
+public class View extends JFrame {
+	
 	/**
-	 * 
+	 * Must be unique
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The panel containing the content
+	 */
 	private JPanel contentPane;
+	
+	/**
+	 * The label with the temperature
+	 */
 	public final JLabel fieldTemperature;
+	
+	/**
+	 * The label with the humidity
+	 */
 	public final JLabel fieldHumidity;
+	
+	/**
+	 * The label with the consigne
+	 */
 	public final JLabel labelConsigne;
+	
+	/**
+	 * The button that increase the consigne
+	 */
 	public final JButton buttonConsignePlus;
+	
+	/**
+	 * The button that decrease the consigne
+	 */
 	public final JButton buttonConsigneMinus;
+	
+	/**
+	 * The label with the Point de Rosée
+	 */
 	public JLabel lblPointDeRose;
+	
+	/**
+	 * The label with the temperature de Rosée
+	 */
 	public JLabel fieldTempRosee;
 	
+	/**
+	 * The title of the graph
+	 */
 	private static final String TITLE = "Graphiques en temps réel";
+
+	/**
+	 * The dataset for the graph
+	 */
 	private DynamicTimeSeriesCollection dataset;
 	
 	
@@ -45,7 +88,6 @@ public class View extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param graphTemp 
 	 */
 	public View() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,14 +227,27 @@ public class View extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
+	/**
+	 * Get the dataset
+	 * @return The current dataset
+	 */
 	public DynamicTimeSeriesCollection getDataset() {
 		return dataset;
 	}
 
+	/**
+	 * Sets the dataset
+	 * @param dataset The new dataset
+	 */
 	public void setDataset(DynamicTimeSeriesCollection dataset) {
 		this.dataset = dataset;
 	}
 
+	/**
+	 * Create a new chart from a dataset
+	 * @param dataset The dataset to create it from
+	 * @return The new chart
+	 */
 	private JFreeChart createChart(final XYDataset dataset) {
 		final JFreeChart result = ChartFactory.createTimeSeriesChart(TITLE, "Temps", "Valeurs", dataset, true, true,
 				false);

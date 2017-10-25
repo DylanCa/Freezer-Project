@@ -1,23 +1,68 @@
 package projet.frigo;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
+/**
+ * This class sends the data from the Model to the View
+ * <p>
+ * It observes the Model using its IModelObserver implementation for any changes. Then, it updates the View
+ */
 public class Controller implements IModelObserver {
-
+	
+	/**
+	 * The current Temperature
+	 */
 	private double tempActuelle;
+	
+	/**
+	 * The current Humidity
+	 */
 	private double humiActuelle;
+	
+	/**
+	 * Parameter for the Point de Rosée
+	 */
 	private double a = 17.27;
+	
+	/**
+	 * Parameter for the Point de Rosée
+	 */
 	private double b = 237.7;
+	
+	/**
+	 * Temperature for the Point de Rosée
+	 */
 	private double tempRosee;
+	
+	/**
+	 * Final result for the Point de Rosée
+	 */
 	private double finalRosee;
 	private float[] newData = new float[3];
 
+	/**
+	 * A reference to our current Model
+	 */
 	private Model model;
+	
+	/**
+	 * The View to use for the Interface
+	 */
 	private View view;
+	
+	/**
+	 * The format used for the transfert of numbers
+	 */
 	private DecimalFormat df = new DecimalFormat("#.##");
 
+
+	/**
+	 * Instanciate the controller
+	 * @param model The model to control
+	 */
 	public Controller(Model model) {
 
 		this.model = model;
@@ -32,6 +77,10 @@ public class Controller implements IModelObserver {
 
 	}
 
+
+	/**
+	 * Register as an eventlistener to the buttons of our view
+	 */
 	private void initializeButtons() {
 
 		view.buttonConsignePlus.addActionListener(new ActionListener() {
@@ -58,6 +107,10 @@ public class Controller implements IModelObserver {
 		});
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void tempActuelleNotify(double value) {
 
@@ -70,6 +123,10 @@ public class Controller implements IModelObserver {
 
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void humidActuelleNotify(double value) {
 
@@ -82,6 +139,11 @@ public class Controller implements IModelObserver {
 
 	}
 
+	/**
+	 * Calculate the Point de Roséee
+	 * @param serie The serie
+	 * @param value The value
+	 */
 	private void calculRosee(String serie, double value) {
 
 		tempRosee = (a * tempActuelle) / (b + tempActuelle) + Math.log(humiActuelle * 0.01);
@@ -91,6 +153,11 @@ public class Controller implements IModelObserver {
 
 	}
 
+	/**
+	 * Updates the controller
+	 * @param serie The class of value to change in the graph
+	 * @param value The new value in the graph
+	 */
 	public void update(String serie, float value) {
 
 		view.getDataset().advanceTime();
@@ -116,6 +183,10 @@ public class Controller implements IModelObserver {
 
 	}
 
+	/**
+	 * Updates the consigne
+	 * @param value The new value
+	 */
 	public void updateConsigne(float value) {
 		newData[2] = value;
 	}

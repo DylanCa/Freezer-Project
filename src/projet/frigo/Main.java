@@ -26,7 +26,7 @@ public class Main {
 
 		} catch (Exception e) {
 
-			System.out.println("Could not find COM port, starting simulation ...");
+			System.out.println("Could not find Arduino, starting simulation ...");
 			icad = new Simulation(model);
 
 		}

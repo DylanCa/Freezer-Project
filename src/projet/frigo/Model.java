@@ -13,6 +13,8 @@ public class Model {
 	 * The current Temperature
 	 */
 	private double tempActuelle = 0;
+	
+	private double oldTemp = 0;
 
 	/**
 	 * The current Humidity
@@ -23,6 +25,27 @@ public class Model {
 	 * The ordered Temperature
 	 */
 	private double tempVoulue = 17;
+	
+	/**
+	 * Temperature for the Point de Ros�e
+	 */
+	private double tempRosee;
+
+	public double getTempRosee() {
+		return tempRosee;
+	}
+
+	public void setTempRosee(double tempRosee) {
+		this.tempRosee = tempRosee;
+	}
+
+	public double getTempVoulue() {
+		return tempVoulue;
+	}
+
+	public void setTempVoulue(double tempVoulue) {
+		this.tempVoulue = tempVoulue;
+	}
 
 	/**
 	 * A list of all the observators of this model
@@ -54,8 +77,17 @@ public class Model {
 	 * @param tempActuelle the new temperature
 	 */
 	public void setTempActuelle(double tempActuelle) {
+		this.oldTemp = this.tempActuelle;
 		this.tempActuelle = tempActuelle;
 		notifyTempActuelleChange();
+	}
+
+	public double getOldTemp() {
+		return oldTemp;
+	}
+
+	public void setOldTemp(double oldTemp) {
+		this.oldTemp = oldTemp;
 	}
 
 	/**

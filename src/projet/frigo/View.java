@@ -75,15 +75,12 @@ public class View extends JFrame {
 	/**
 	 * The title of the graph
 	 */
-	private static final String TITLE = "Graphiques en temps r�el";
+	private static final String TITLE = "Graphiques en temps r\u00E9el";
 
 	/**
 	 * The dataset for the graph
 	 */
 	private DynamicTimeSeriesCollection dataset;
-	
-	
-	
 	
 
 	/**
@@ -94,13 +91,13 @@ public class View extends JFrame {
 		
 		dataset = new DynamicTimeSeriesCollection(3, 600, new Second());
 		dataset.setTimeBase(new Second());
-		dataset.addSeries(new float[1], 0, "Temp�rature");
-		dataset.addSeries(new float[1], 1, "Humidit�");
+		dataset.addSeries(new float[1], 0, "Temp\u00E9rature");
+		dataset.addSeries(new float[1], 1, "Humidit\u00E9");
 		dataset.addSeries(new float[1], 2, "Consigne");
 		
 		
 
-		setTitle("Mini-Frigo connect�");
+		setTitle("Mini-Frigo connect\u00E9");
 		setBounds(100, 100, 724, 704);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));

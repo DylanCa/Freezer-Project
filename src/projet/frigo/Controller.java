@@ -33,14 +33,17 @@ public class Controller implements IModelObserver {
 	private double b = 237.7;
 	
 	/**
-	 * Temperature for the Point de Ros�e
-	 */
-	private double tempRosee;
-	
-	/**
 	 * Final result for the Point de Ros�e
 	 */
 	private double finalRosee;
+	
+	/**
+	 * Variable to check the warnings
+	 */
+	
+	/**
+	 *  Captures the data to update the charts
+	 */
 	private float[] newData = new float[3];
 
 	/**
@@ -120,6 +123,12 @@ public class Controller implements IModelObserver {
 	 */
 	@Override
 	public void tempActuelleNotify(double value) {
+		
+		if(value > model.getOldTemp()) {
+			System.out.println(value + " > " + model.getOldTemp() );
+		} else if ( value < model.getOldTemp()) {
+			System.out.println(value + " < " + model.getOldTemp() );
+		} 
 
 		this.tempActuelle = value;
 
@@ -153,8 +162,8 @@ public class Controller implements IModelObserver {
 	 */
 	private void calculRosee(String serie, double value) {
 
-		tempRosee = (a * tempActuelle) / (b + tempActuelle) + Math.log(humiActuelle * 0.01);
-		finalRosee = (b * tempRosee) / (a - tempRosee);
+		model.setTempRosee( (a * tempActuelle) / (b + tempActuelle) + Math.log(humiActuelle * 0.01) ) ;
+		finalRosee = (b * model.getTempRosee()) / (a - model.getTempRosee());
 
 		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "C");
 
@@ -187,7 +196,6 @@ public class Controller implements IModelObserver {
 		default:
 			break;
 		}
-
 	}
 
 	/**

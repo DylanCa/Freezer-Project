@@ -1,5 +1,6 @@
 package projet.frigo;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -69,7 +70,7 @@ public class Controller implements IModelObserver {
 	 * If positive, give warning if the values rises too quickly.
 	 * If negative, give warning if the value falls too quickly
 	 */
-	private double warnHumiHyst=2.2;
+	private double warnHumiHyst = 2.2;
 	
 	/**
 	 * The sensitivity for the warning for the humidity
@@ -77,14 +78,14 @@ public class Controller implements IModelObserver {
 	 * This is the number of points the warning generator backtraces for the tangent.
 	 * Use this to smooth out read noise.
 	 */
-	private int warnHumiSens=10;
+	private int warnHumiSens = 10;
 	
 	/**
 	 * If there should be a warning for the temperature
 	 * <p>
 	 * {@code true=warning ; false=no warning}
 	 */
-	private boolean warnTempActive=false;
+	private boolean warnTempActive = false;
 	
 	/**
 	 * The hysterisis for the warning for the temperature
@@ -94,7 +95,7 @@ public class Controller implements IModelObserver {
 	 * If positive, give warning if the values rises too quickly.
 	 * If negative, give warning if the value falls too quickly
 	 */
-	private double warnTempHyst=-2.2;
+	private double warnTempHyst = 2.2;
 	
 	/**
 	 * The sensitivity for the warning for the temperature
@@ -102,7 +103,7 @@ public class Controller implements IModelObserver {
 	 * This is the number of points the warning generator backtraces for the tangent.
 	 * Use this to smooth out read noise.
 	 */
-	private int warnTempSens=10;
+	private int warnTempSens = 10;
 	
 	/**
 	 * If there should be a warning for the humidity
@@ -241,6 +242,9 @@ public class Controller implements IModelObserver {
 		}
 		
 		// if we arrive here, no warning to throw
+
+		view.lblWarning.setForeground(new Color(0,0,0));
+		view.lblWarning.setText("Pimp my Fridge !");
 		return false;
 	}
 	
@@ -255,10 +259,14 @@ public class Controller implements IModelObserver {
 			warnTempActive=calculateWarning(newData[0],view.getDataset().getYValue(0,-warnTempSens),warnTempHyst);
 		}
 		if(warnHumiActive) {
-			System.out.println("Warning: Humide ("+String.valueOf(newData[1])+"/"+String.valueOf(view.getDataset().getYValue(1,-warnHumiSens))+")");
+
+			view.lblWarning.setForeground(new Color(255,0,0));
+			view.lblWarning.setText("Attention: Humidité en hausse !");
 		}
 		if(warnTempActive) {
-			System.out.println("Warning: Temperature ("+String.valueOf(newData[0])+"/"+String.valueOf(view.getDataset().getYValue(0,-warnTempSens))+")");
+
+			view.lblWarning.setForeground(new Color(255,0,0));
+			view.lblWarning.setText("Attention: Température en hausse !");
 		}
 	}
 

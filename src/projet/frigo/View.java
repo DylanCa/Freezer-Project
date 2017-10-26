@@ -73,6 +73,11 @@ public class View extends JFrame {
 	public JLabel fieldTempRosee;
 	
 	/**
+	 * The top Label
+	 */
+	public JLabel lblWarning;
+	
+	/**
 	 * The title of the graph
 	 */
 	private static final String TITLE = "Graphiques en temps r\u00E9el";
@@ -150,12 +155,13 @@ public class View extends JFrame {
 		fieldTempRosee.setHorizontalAlignment(SwingConstants.CENTER);
 		fieldTempRosee.setForeground(Color.PINK);
 		fieldTempRosee.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
 		ChartPanel chartpanel = new ChartPanel(createChart(dataset));
 		
-		JLabel lblPimpMyFridge = new JLabel("Pimp my Fridge");
-		lblPimpMyFridge.setBackground(new Color(255, 255, 255));
-		lblPimpMyFridge.setFont(new Font("Segoe Print", Font.BOLD, 18));
-		lblPimpMyFridge.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWarning = new JLabel("Pimp my Fridge !");
+		lblWarning.setBackground(new Color(255, 255, 255));
+		lblWarning.setFont(new Font("Malgun Gothic Semilight", Font.ITALIC, 29));
+		lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		
 		
@@ -178,7 +184,7 @@ public class View extends JFrame {
 						.addComponent(lblPointDeRose, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
 					.addGap(185))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lblPimpMyFridge, GroupLayout.PREFERRED_SIZE, 696, GroupLayout.PREFERRED_SIZE)
+					.addComponent(lblWarning, GroupLayout.PREFERRED_SIZE, 696, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(193, Short.MAX_VALUE))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
@@ -199,7 +205,7 @@ public class View extends JFrame {
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lblPimpMyFridge, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+					.addComponent(lblWarning, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)

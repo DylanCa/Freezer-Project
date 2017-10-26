@@ -56,9 +56,6 @@ void loop(){
       value_received = Serial.read();
       
         digitalWrite(ledPin, value_received);
-        
-      Serial.print("Valeur reçue: ");
-      Serial.println(value_received);
     }
     
     delay(1000); //Delay 1 sec.*/

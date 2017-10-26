@@ -14,7 +14,7 @@ float hum;  //Stores humidity value
 float temp; //Stores temperature value
 int ledPin = 13;
 int value_received;
-int ThermistorPin = 4;
+int ThermistorPin = 9;
 int Vo;
 float R1 = 10000;
 float logR2, R2, T;
@@ -26,6 +26,7 @@ void setup(){
     Serial.begin(9600);
     dht.begin();
     pinMode(ledPin, OUTPUT);
+    pinMode(ThermistorPin, OUTPUT);
 }
 
 void loop(){
@@ -56,6 +57,7 @@ void loop(){
       value_received = Serial.read();
       
         digitalWrite(ledPin, value_received);
+        digitalWrite(ThermistorPin, value_received);
     }
     
     delay(1000); //Delay 1 sec.*/

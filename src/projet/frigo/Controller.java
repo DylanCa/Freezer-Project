@@ -150,8 +150,6 @@ public class Controller implements IModelObserver {
 				model.setTempVoulueActuelle(value);
 
 				view.labelConsigne.setText(String.valueOf(value));
-
-				updateConsigne((float) value);
 			}
 		});
 
@@ -161,8 +159,6 @@ public class Controller implements IModelObserver {
 				model.setTempVoulueActuelle(value);
 
 				view.labelConsigne.setText(String.valueOf(value));
-
-				updateConsigne((float) value);
 			}
 
 		});
@@ -298,16 +294,8 @@ public class Controller implements IModelObserver {
 		default:
 			break;
 		}
-		
+		newData[2] = (float) model.getTempVoulue();
 		updateWarnings();
-	}
-
-	/**
-	 * Updates the consigne
-	 * @param value The new value
-	 */
-	public void updateConsigne(float value) {
-		newData[2] = value;
 	}
 
 }

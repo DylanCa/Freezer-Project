@@ -60,6 +60,56 @@ public class Controller implements IModelObserver {
 	 * The format used for the transfert of numbers
 	 */
 	private DecimalFormat df = new DecimalFormat("#.##");
+	
+	/**
+	 * The hysterisis for the warning for the humidity
+	 * <p>
+	 * This is the tangent value from which on to give a warning.
+	 * <p>
+	 * If positive, give warning if the values rises too quickly.
+	 * If negative, give warning if the value falls too quickly
+	 */
+	private double warnHumiHyst=2.2;
+	
+	/**
+	 * The sensitivity for the warning for the humidity
+	 * <p>
+	 * This is the number of points the warning generator backtraces for the tangent.
+	 * Use this to smooth out read noise.
+	 */
+	private int warnHumiSens=10;
+	
+	/**
+	 * If there should be a warning for the temperature
+	 * <p>
+	 * {@code true=warning ; false=no warning}
+	 */
+	private boolean warnTempActive=false;
+	
+	/**
+	 * The hysterisis for the warning for the temperature
+	 * <p>
+	 * This is the tangent value from which on to give a warning.
+	 * <p>
+	 * If positive, give warning if the values rises too quickly.
+	 * If negative, give warning if the value falls too quickly
+	 */
+	private double warnTempHyst=-2.2;
+	
+	/**
+	 * The sensitivity for the warning for the temperature
+	 * <p>
+	 * This is the number of points the warning generator backtraces for the tangent.
+	 * Use this to smooth out read noise.
+	 */
+	private int warnTempSens=10;
+	
+	/**
+	 * If there should be a warning for the humidity
+	 * <p>
+	 * {@code true=warning ; false=no warning}
+	 */
+	private boolean warnHumiActive=false;
 
 
 	/**
@@ -168,6 +218,49 @@ public class Controller implements IModelObserver {
 		view.fieldTempRosee.setText(String.valueOf(df.format(finalRosee)) + "C");
 
 	}
+	
+	/**
+	 * Calculates whether a warning applies for a given series
+	 * @param newvalue The last value
+	 * @param oldvalue The Nth-last value
+	 * @param hysterisis The hysterisis for a given series
+	 * @returns boolean {code true=warning applies ; false=no warning needed}
+	 */
+	private boolean calculateWarning(double newvalue,double oldvalue,double hysterisis) {
+		// calcul of the tangent between the two value
+		double tangent=newvalue-oldvalue;
+		
+		// if the hysterisis is positive, throws warning if the tangent is superior to it
+		if((hysterisis>0) && (tangent>hysterisis)) {
+			return true;
+		}
+		
+		// if the hysterisis is negative, throws warning if the tangent is inferior to it
+		if((hysterisis<0) && (tangent<hysterisis)) {
+			return true;
+		}
+		
+		// if we arrive here, no warning to throw
+		return false;
+	}
+	
+	/**
+	 * Calculates the warnings
+	 */
+	private void updateWarnings() {
+		if(view.getDataset().getNewestIndex()>=warnHumiSens) {
+			warnHumiActive=calculateWarning(newData[1],view.getDataset().getYValue(1,-warnHumiSens),warnHumiHyst);
+		}
+		if(view.getDataset().getNewestIndex()>=warnTempSens) {
+			warnTempActive=calculateWarning(newData[0],view.getDataset().getYValue(0,-warnTempSens),warnTempHyst);
+		}
+		if(warnHumiActive) {
+			System.out.println("Warning: Humide ("+String.valueOf(newData[1])+"/"+String.valueOf(view.getDataset().getYValue(1,-warnHumiSens))+")");
+		}
+		if(warnTempActive) {
+			System.out.println("Warning: Temperature ("+String.valueOf(newData[0])+"/"+String.valueOf(view.getDataset().getYValue(0,-warnTempSens))+")");
+		}
+	}
 
 	/**
 	 * Updates the controller
@@ -184,6 +277,7 @@ public class Controller implements IModelObserver {
 			newData[0] = value;
 
 			view.getDataset().appendData(newData);
+			
 			break;
 
 		case "humi":
@@ -196,6 +290,8 @@ public class Controller implements IModelObserver {
 		default:
 			break;
 		}
+		
+		updateWarnings();
 	}
 
 	/**

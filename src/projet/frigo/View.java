@@ -110,6 +110,7 @@ public class View extends JFrame {
 		setContentPane(contentPane);
 
 		JLabel lblNewLabel = new JLabel("Temp\u00E9rature Interne");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBackground(new Color(0, 0, 0));
 		lblNewLabel.setForeground(new Color(0, 0, 0));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));

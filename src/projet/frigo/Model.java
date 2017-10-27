@@ -14,8 +14,14 @@ public class Model {
 	 */
 	private double tempActuelle = 0;
 	
+    /**
+     * The previous Temperature
+     */
 	private double oldTemp = 0;
 	
+    /**
+     * Whether the freezer is open or closed
+     */
 	private boolean ouvert = false;
 
 	/**
@@ -33,18 +39,34 @@ public class Model {
 	 */
 	private double tempRosee;
 
+    /**
+     * Gets the temperature for the Point de Ros�e
+     * @return The current temperature for the Point de Ros�e
+     */
 	public double getTempRosee() {
 		return tempRosee;
 	}
 
+    /**
+     * Sets the temperature for the Point de Ros�e
+     * @param tempRosee The new temperature for the Point de Ros�e
+     */
 	public void setTempRosee(double tempRosee) {
 		this.tempRosee = tempRosee;
 	}
 
+    /**
+     * Gets the temperature the user wants
+     * @returns The current wanted temperature
+     */
 	public double getTempVoulue() {
 		return tempVoulue;
 	}
 
+    /**
+     * Sets the temperature the user wants
+     * @param tempVoulu The new wanted temperature
+     */
 	public void setTempVoulue(double tempVoulue) {
 		this.tempVoulue = tempVoulue;
 	}
@@ -161,10 +183,18 @@ public class Model {
 		}
 	}
 
+    /**
+     * Gets whether the freezer is open
+     * @return whether the freezer is open
+     */
 	public boolean isOuvert() {
 		return ouvert;
 	}
 
+    /**
+     * Sets whether the freezer is open
+     * @param ouvert whether the freezer is open
+     */
 	public void setOuvert(boolean ouvert) {
 		this.ouvert = ouvert;
 	}

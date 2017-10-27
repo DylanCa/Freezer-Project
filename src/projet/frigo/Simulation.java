@@ -8,15 +8,45 @@ import java.text.DecimalFormat;
  * To use if the Arduino is not connected to the computer
  */
 public class Simulation implements ICAD {
-
+    /**
+     * A reference to our current model
+     */
 	private Model model;
+    
+    /**
+     * The formatting parameters for the transfert of our numbers
+     */
 	private DecimalFormat df = new DecimalFormat("#.##");
+    
+    /**
+     * The current internal temperature of the freezer
+     */
 	private double temperatureInterieure;
+    
+    /**
+     * The current external temperature of the freezer
+     */
 	private double temperatureExeterieure;
+    
+    /**
+     * The temperature the user wants
+     */
 	private double consigne;
+    
+    /**
+     * The current humidity inside the freezer 
+     */
 	private double humidite;
+    
+    /**
+     * Whether the freezer is open or closed
+     */
 	private boolean ouvert;
 
+    /**
+     * Initialize the simulation on the given model
+     * @param model The model to send the data to
+     */
 	public Simulation(Model model) {
 
 		this.model = model;

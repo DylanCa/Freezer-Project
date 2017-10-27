@@ -182,7 +182,7 @@ public class Controller implements IModelObserver {
 		update("temp", (float) value);
 		this.calculRosee("temp", value);
 
-		view.fieldTemperature.setText(String.valueOf(value) + "C");
+		view.fieldTemperature.setText(String.valueOf(df.format(value) + "C"));
 
 	}
 
@@ -198,7 +198,7 @@ public class Controller implements IModelObserver {
 		update("humi", (float) value);
 		this.calculRosee("humi", value);
 
-		view.fieldHumidity.setText(String.valueOf(value) + "%");
+		view.fieldHumidity.setText(String.valueOf(df.format(value) + "%"));
 
 	}
 

@@ -14,7 +14,7 @@ float hum;  //Stores humidity value
 float temp; //Stores temperature value
 int ledPin = 13;
 int value_received;
-int ThermistorPin = 9;
+int fanPin = 9;
 int Vo;
 float R1 = 10000;
 float logR2, R2, T;
@@ -26,7 +26,7 @@ void setup(){
     Serial.begin(9600);
     dht.begin();
     pinMode(ledPin, OUTPUT);
-    pinMode(ThermistorPin, OUTPUT);
+    pinMode(fanPin, OUTPUT);
 }
 
 void loop(){
@@ -34,21 +34,11 @@ void loop(){
     //Read data and store it to variables hum and temp
     float hum = dht.readHumidity();
     float temp= dht.readTemperature();
-
-     Vo = analogRead(ThermistorPin);
-  R2 = R1 * (1023.0 / (float)Vo - 1.0);
-  logR2 = log(R2);
-  T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));
-  T = T - 273.15;
-  //T = (T * 9.0)/ 5.0 + 32.0; 
-    
     //Print temp and humidity values to serial monitor with " 25.64;50.20" Format
   
     Serial.print(temp);
     Serial.print(";");
     Serial.print(hum);
-    Serial.print(";");
-    Serial.print(T);
     Serial.println(";");
 
     // if serial port is available, read incoming bytes
@@ -57,7 +47,7 @@ void loop(){
       value_received = Serial.read();
       
         digitalWrite(ledPin, value_received);
-        digitalWrite(ThermistorPin, value_received);
+        digitalWrite(fanPin, value_received);
     }
     
     delay(1000); //Delay 1 sec.*/

@@ -145,7 +145,7 @@ public class Arduino implements SerialPortEventListener, ICAD {
 				double temp1 = Double.parseDouble(parts[0]); // 27ï¿½C
 				double humi1 = Double.parseDouble(parts[1]); // 53 %
 				System.out.print("Temperature :" + temp1);
-				System.out.println(" / Humiditï¿½ :" + humi1);
+				System.out.println(" / Humidité :" + humi1);
 
 				model.setTempActuelle(temp1);
 				model.setHumidActuelle(humi1);

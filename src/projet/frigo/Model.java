@@ -15,6 +15,8 @@ public class Model {
 	private double tempActuelle = 0;
 	
 	private double oldTemp = 0;
+	
+	private boolean ouvert = false;
 
 	/**
 	 * The current Humidity
@@ -157,6 +159,14 @@ public class Model {
 		for (IModelObserver observer : listModel) {
 			observer.humidActuelleNotify(this.humidActuelle);
 		}
+	}
+
+	public boolean isOuvert() {
+		return ouvert;
+	}
+
+	public void setOuvert(boolean ouvert) {
+		this.ouvert = ouvert;
 	}
 
 

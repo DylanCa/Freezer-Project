@@ -1,5 +1,7 @@
 package projet.frigo;
 
+import java.text.DecimalFormat;
+
 /**
  * A simulator of an Arduino.
  * <p>
@@ -7,26 +9,21 @@ package projet.frigo;
  */
 public class Simulation implements ICAD {
 
-	/**
-	 * The Model to update
-	 */
-	Model model;
-	
-	/**
-	 * A log of the previous temperature
-	 */
-	double oldTemperature = 20;
-	
-	/**
-	 * A log of the previous humidity
-	 */
-	double oldHumidite = 50;
+	private Model model;
+	private DecimalFormat df = new DecimalFormat("#.##");
+	private double temperatureInterieure;
+	private double temperatureExeterieure;
+	private double consigne;
+	private double humidite;
+	private boolean ouvert;
 
-	/**
-	 * Start a simulation
-	 * @param model The model to send the data to
-	 */
 	public Simulation(Model model) {
+
+		this.model = model;
+		this.temperatureInterieure =20;
+		this.temperatureExeterieure = 28;
+		this.humidite = 50;
+
 		this.model = model;
 		this.initialize();
 	}
@@ -40,18 +37,36 @@ public class Simulation implements ICAD {
 
 		while (true) {
 
-			double change = Math.round(Math.random() * 100);
-			if (change % 2 == 0) {
-				change = change * (-1);
+			this.consigne = model.getTempVoulueActuelle();
+			this.ouvert = model.isOuvert();
+			
+			if (ouvert == false) {
+
+				// Si la consigne est plus faible que la température du frigo
+				if (consigne < temperatureInterieure) {
+					temperatureInterieure = temperatureInterieure - 0.2; // On baisse la température de 0.2
+				}
+
+				if (consigne - 2 < temperatureInterieure) // Simu de l'inverstion de la plaque a effet peltier
+				{
+					temperatureInterieure = temperatureInterieure + 0.1; // Sinon elle augmente (principe du tout ou
+																			// rien)
+				}
 			}
-			if (oldTemperature + Math.round(change / 25) > 0 & oldTemperature + Math.round(change / 25) < 50) {
-				this.oldTemperature = this.oldTemperature + Math.round(change / 25);
-				model.setTempActuelle(oldTemperature);
+			// Si il est ouvert
+
+			else if (ouvert == true) {
+
+				// Si la température extiereure est supérieure
+
+				if (temperatureExeterieure > temperatureInterieure) {
+					temperatureInterieure = temperatureInterieure + 0.3; // La température augmente (plus vite que quand
+																			// on coupe le Peltier)
+				}
 			}
-			if (oldHumidite + Math.round(change / 25) > 0 & oldHumidite + Math.round(change / 25) < 100) {
-				this.oldHumidite = this.oldHumidite + Math.round(change / 25);
-				model.setHumidActuelle(oldHumidite);
-			}
+			
+			model.setTempActuelle(temperatureInterieure);
+			model.setHumidActuelle(humidite);
 
 			try {
 				Thread.sleep(1000);
@@ -62,6 +77,5 @@ public class Simulation implements ICAD {
 		}
 
 	}
-
 
 }

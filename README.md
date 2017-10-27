@@ -1,4 +1,4 @@
-# Java_Freezer-Project
+# Javsa_Freezer-Project
 Java project realized using C++ and Java through a serial connection to built an HMI
 
 Schema
@@ -14,13 +14,13 @@ Schema
 ## Product Breakdown Structure (PBS)
 ![pbs](https://user-images.githubusercontent.com/19567048/32003285-e2060ada-b99e-11e7-9f9f-4595a1f316c3.png)]
 
-## Materials
+## Hardware
 
 * Arduino Uno
 * DHT AM2302* Breadboard
 
 ## Poster about Scientific Concepts
-![poster_scientific_concepts](https://user-images.githubusercontent.com/19567048/32003321-f4b828fc-b99e-11e7-9a24-0948ef97e621.PNG)]
+![scientific_poster](https://user-images.githubusercontent.com/19567048/32003321-f4b828fc-b99e-11e7-9a24-0948ef97e621.PNG)]
 
 ## Contributors
 
@@ -28,7 +28,7 @@ Schema
 * Dylan C
 * Cédric M
 * Dylan P
-* Yvar D
+* Yvar dG
 
 ## Links
 

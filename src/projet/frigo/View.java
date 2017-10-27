@@ -2,7 +2,18 @@ package projet.frigo;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -19,240 +32,158 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 import org.jfree.data.xy.XYDataset;
+
+
 import javax.swing.SwingConstants;
 
 
 /**
  * The screen of our application
  */
-public class View extends JFrame {
+
+public class View {
+    private static class PanelWithBackground extends JPanel {
+
+        private Image backgroundImage;
+        private Point backgroundLocation = new Point();
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (getBackgroundImage() != null) {
+                g.drawImage(getBackgroundImage(), backgroundLocation.x, backgroundLocation.y, this);
+            }
+        }
+
+        public Image getBackgroundImage() {
+            return backgroundImage;
+        }
+
+        public void setBackgroundImage(Image backgroundImage) {
+            this.backgroundImage = backgroundImage;
+            repaint();
+        }
+
+        public Point getBackgroundLocation() {
+            return backgroundLocation;
+        }
+
+        public void setBackgroundLocation(Point backgroundLocation) {
+            this.backgroundLocation = backgroundLocation;
+            repaint();
+        }
+    }
+
+    protected static void View() throws MalformedURLException {
+        JFrame frame = new JFrame("Mini-Frigo connect\u00E9");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        PanelWithBackground panelWithBackground = new PanelWithBackground();
+        panelWithBackground.setLayout(null);
+        panelWithBackground.setBackgroundImage(new ImageIcon(new URL(
+                "http://ahdzbook.com/data/out/114/hdwp693947929.jpeg")).getImage());
+        JLabel backgroundWallpaper = new JLabel(new ImageIcon(new URL(
+                "http://www.google.fr")));
+        // Next 2 lines should rather be performed by a LayoutManager
+        panelWithBackground.setPreferredSize(new Dimension(1024, 768));
+        backgroundWallpaper.setBounds(50, 200, backgroundWallpaper.getPreferredSize().width, backgroundWallpaper.getPreferredSize().height);
+
+        panelWithBackground.add(backgroundWallpaper);
+        frame.getContentPane().add(panelWithBackground);
+        
+        JLabel lblNewLabel = new JLabel("Température actuelle");
+        lblNewLabel.setForeground(Color.BLACK);
+        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblNewLabel.setBackground(Color.BLACK);
+        lblNewLabel.setBounds(50, 83, 196, 40);
+        panelWithBackground.add(lblNewLabel);
+        
+        JLabel fieldTemperature = new JLabel("0°C");
+        fieldTemperature.setHorizontalAlignment(SwingConstants.CENTER);
+        fieldTemperature.setForeground(Color.RED);
+        fieldTemperature.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        fieldTemperature.setBounds(229, 83, 196, 40);
+        panelWithBackground.add(fieldTemperature);
+        
+        JLabel lblWarning = new JLabel("Pimp my Fridge !");
+        lblWarning.setHorizontalAlignment(SwingConstants.CENTER);
+        lblWarning.setFont(new Font("Dialog", Font.ITALIC, 29));
+        lblWarning.setBackground(Color.WHITE);
+        lblWarning.setBounds(184, 14, 696, 63);
+        panelWithBackground.add(lblWarning);
+        
+        JLabel lblHumidit = new JLabel("Humidité");
+        lblHumidit.setHorizontalAlignment(SwingConstants.CENTER);
+        lblHumidit.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblHumidit.setBounds(36, 142, 236, 40);
+        panelWithBackground.add(lblHumidit);
+        
+        JLabel lblPointDeRose = new JLabel("Point de Rosée");
+        lblPointDeRose.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPointDeRose.setFont(new Font("Tahoma", Font.PLAIN, 21));
+        lblPointDeRose.setBounds(23, 200, 250, 26);
+        panelWithBackground.add(lblPointDeRose);
+        
+        JLabel fieldTempRosee = new JLabel("0?C");
+        fieldTempRosee.setHorizontalAlignment(SwingConstants.CENTER);
+        fieldTempRosee.setForeground(Color.PINK);
+        fieldTempRosee.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        fieldTempRosee.setBounds(200, 203, 250, 22);
+        panelWithBackground.add(fieldTempRosee);
+        
+        JLabel fieldHumidity = new JLabel("0%");
+        fieldHumidity.setHorizontalAlignment(SwingConstants.CENTER);
+        fieldHumidity.setForeground(Color.BLUE);
+        fieldHumidity.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        fieldHumidity.setBounds(200, 134, 236, 40);
+        panelWithBackground.add(fieldHumidity);
+        
+        JLabel lblConsigne = new JLabel("Température désirée :");
+        lblConsigne.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblConsigne.setBounds(449, 83, 173, 40);
+        panelWithBackground.add(lblConsigne);
+        
+        JLabel labelConsigne = new JLabel("17");
+        labelConsigne.setForeground(Color.ORANGE);
+        labelConsigne.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelConsigne.setBounds(632, 83, 20, 40);
+        panelWithBackground.add(labelConsigne);
+        
+        JButton buttonConsigneMinus = new JButton("Baisser la température");
+        buttonConsigneMinus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        buttonConsigneMinus.setBounds(449, 127, 193, 25);
+        panelWithBackground.add(buttonConsigneMinus);
+        
+        JButton buttonConsignePlus = new JButton("Augmenter la température");
+        buttonConsignePlus.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        buttonConsignePlus.setBounds(672, 127, 221, 25);
+        panelWithBackground.add(buttonConsignePlus);
+        
+        JLabel labelConsigneDegres = new JLabel("°C");
+        labelConsigneDegres.setForeground(Color.ORANGE);
+        labelConsigneDegres.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        labelConsigneDegres.setBounds(662, 83, 29, 40);
+        panelWithBackground.add(labelConsigneDegres);
+        
+        JPanel chartpanel = new JPanel();
+        chartpanel.setBounds(36, 286, 955, 471);
+        panelWithBackground.add(chartpanel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    View();
+                } catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 	
-	/**
-	 * Must be unique
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * The panel containing the content
-	 */
-	private JPanel contentPane;
-	
-	/**
-	 * The label with the temperature
-	 */
-	public final JLabel fieldTemperature;
-	
-	/**
-	 * The label with the humidity
-	 */
-	public final JLabel fieldHumidity;
-	
-	/**
-	 * The label with the consigne
-	 */
-	public final JLabel labelConsigne;
-	
-	/**
-	 * The button that increase the consigne
-	 */
-	public final JButton buttonConsignePlus;
-	
-	/**
-	 * The button that decrease the consigne
-	 */
-	public final JButton buttonConsigneMinus;
-	
-	/**
-	 * The label with the Point de Ros�e
-	 */
-	public JLabel lblPointDeRose;
-	
-	/**
-	 * The label with the temperature de Ros�e
-	 */
-	public JLabel fieldTempRosee;
-	
-	/**
-	 * The title of the graph
-	 */
-	private static final String TITLE = "Graphiques en temps r\u00E9el";
-
-	/**
-	 * The dataset for the graph
-	 */
-	private DynamicTimeSeriesCollection dataset;
-	
-
-	/**
-	 * Create the frame.
-	 */
-	public View() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		dataset = new DynamicTimeSeriesCollection(3, 600, new Second());
-		dataset.setTimeBase(new Second());
-		dataset.addSeries(new float[1], 0, "Temp\u00E9rature");
-		dataset.addSeries(new float[1], 1, "Humidit\u00E9");
-		dataset.addSeries(new float[1], 2, "Consigne");
-		
-		
-
-		setTitle("Mini-Frigo connect\u00E9");
-		setBounds(100, 100, 724, 704);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-
-		JLabel lblNewLabel = new JLabel("Temp\u00E9rature actuelle");
-		lblNewLabel.setBackground(new Color(0, 0, 0));
-		lblNewLabel.setForeground(new Color(0, 0, 0));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-
-		JLabel lblHumidit = new JLabel("Humidit\u00E9");
-		lblHumidit.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHumidit.setFont(new Font("Tahoma", Font.PLAIN, 18));
-
-		JLabel lblConsigne = new JLabel("Temp\u00E9rature d\u00E9sir\u00E9e :");
-		lblConsigne.setFont(new Font("Tahoma", Font.PLAIN, 18));
-
-		fieldTemperature = new JLabel("0\u00B0C");
-		fieldTemperature.setHorizontalAlignment(SwingConstants.CENTER);
-		fieldTemperature.setForeground(Color.RED);
-		fieldTemperature.setFont(new Font("Tahoma", Font.PLAIN, 18));
-
-		fieldHumidity = new JLabel("0%");
-		fieldHumidity.setHorizontalAlignment(SwingConstants.CENTER);
-		fieldHumidity.setForeground(Color.BLUE);
-		fieldHumidity.setFont(new Font("Tahoma", Font.PLAIN, 18));
-
-		labelConsigne = new JLabel("0\u00B0C");
-		labelConsigne.setForeground(Color.ORANGE);
-		labelConsigne.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		labelConsigne.setText("17");
-
-		buttonConsignePlus = new JButton("Augmenter la temp\u00E9rature");
-		buttonConsignePlus.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
-
-		buttonConsigneMinus = new JButton("Baisser la temp\u00E9rature");
-		buttonConsigneMinus.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
-		JLabel labelConsigneDegres = new JLabel("\u00B0C");
-		labelConsigneDegres.setForeground(Color.ORANGE);
-		labelConsigneDegres.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
-		lblPointDeRose = new JLabel("Point de Ros\u00E9e");
-		lblPointDeRose.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPointDeRose.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		
-		fieldTempRosee = new JLabel("0�C");
-		fieldTempRosee.setHorizontalAlignment(SwingConstants.CENTER);
-		fieldTempRosee.setForeground(Color.PINK);
-		fieldTempRosee.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		ChartPanel chartpanel = new ChartPanel(createChart(dataset));
-		
-		JLabel lblPimpMyFridge = new JLabel("Pimp my Fridge");
-		lblPimpMyFridge.setBackground(new Color(255, 255, 255));
-		lblPimpMyFridge.setFont(new Font("Segoe Print", Font.BOLD, 18));
-		lblPimpMyFridge.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		
-		
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(fieldTemperature, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(fieldHumidity, GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-						.addComponent(lblHumidit, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(fieldTempRosee, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblPointDeRose, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-					.addGap(185))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lblPimpMyFridge, GroupLayout.PREFERRED_SIZE, 696, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(193, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblConsigne)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(labelConsigne)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(labelConsigneDegres, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(buttonConsigneMinus, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(buttonConsignePlus, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(chartpanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(199, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(lblPimpMyFridge, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblHumidit, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPointDeRose))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(fieldHumidity, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(fieldTempRosee)
-						.addComponent(fieldTemperature, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblConsigne, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelConsigne, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelConsigneDegres, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonConsigneMinus)
-						.addComponent(buttonConsignePlus))
-					.addGap(18)
-					.addComponent(chartpanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		contentPane.setLayout(gl_contentPane);
-	}
-	
-	/**
-	 * Get the dataset
-	 * @return The current dataset
-	 */
-	public DynamicTimeSeriesCollection getDataset() {
-		return dataset;
-	}
-
-	/**
-	 * Sets the dataset
-	 * @param dataset The new dataset
-	 */
-	public void setDataset(DynamicTimeSeriesCollection dataset) {
-		this.dataset = dataset;
-	}
-
-	/**
-	 * Create a new chart from a dataset
-	 * @param dataset The dataset to create it from
-	 * @return The new chart
-	 */
-	private JFreeChart createChart(final XYDataset dataset) {
-		final JFreeChart result = ChartFactory.createTimeSeriesChart(TITLE, "Temps", "Valeurs", dataset, true, true,
-				false);
-		final XYPlot plot = result.getXYPlot();
-		ValueAxis domain = plot.getDomainAxis();
-		domain.setAutoRange(true);
-		ValueAxis range = plot.getRangeAxis();
-		range.setRange(-10, 100);
-		return result;
-	}
 }
